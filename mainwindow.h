@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <qpushbutton.h>
+#include <QPushButton>
+#include <QLCDNumber>
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QPushButton **myButton;
+    QPushButton *myButtons[16];
+    QLCDNumber *myLCD;
+
+private slots:
+    void buttonClicked();
 };
 
 #endif // MAINWINDOW_H
