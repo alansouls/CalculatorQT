@@ -8,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-bool  MainWindow::button1IsClicked(){
-    if(ui->pushButton->isDo)
-}
 MainWindow::~MainWindow()
 {
     delete ui;
