@@ -8,12 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-<<<<<<< HEAD
-MainWindow::button1IsClicked(){
-=======
 bool  MainWindow::button1IsClicked(){
->>>>>>> something
-    if(ui->)
+    if(ui->pushButton->isDo)
 }
 MainWindow::~MainWindow()
 {

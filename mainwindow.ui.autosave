@@ -26,6 +26,9 @@
     <property name="text">
      <string>1</string>
     </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
@@ -231,15 +234,6 @@
       <height>41</height>
      </rect>
     </property>
-    <property name="whatsThis">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="digitCount">
-     <number>16</number>
-    </property>
-    <property name="value" stdset="0">
-     <double>142.199999999999989</double>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -251,12 +245,6 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuCalculator">
-    <property name="title">
-     <string>Calculator</string>
-    </property>
-   </widget>
-   <addaction name="menuCalculator"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
