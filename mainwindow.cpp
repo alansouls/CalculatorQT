@@ -36,4 +36,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+slots void MainWindow::buttonClicked(){
+    QPushButton * clickedButton = (QPushButton*)sender();
+    for(int i = 0; i <= 9;i++){
+        if(clickedButton->text()[0] == i + 48 ){
+            myLCD->display(i);
+        }
+    }
+
+}
 
