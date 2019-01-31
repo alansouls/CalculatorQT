@@ -94,6 +94,15 @@ slots void MainWindow::buttonClicked(){
     }else if(buttonReciever->text()[0] == '/'){
         processOperator();
         calculatorState = 4;
+    }else if(buttonReciever->text()[0] == '='){
+        if(calculatorState < 5){
+            opMap(calculatorState,myLCD->value());
+        }else{
+            opMap(calculatorState - 5,myLCD->value());
+        }
+        calculatorState = 0;
+        isBufferValueDisplayed = true;
+        bufferValue = myLCD->value();
     }
 
 }
