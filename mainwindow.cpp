@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     myLCD = ui->lcdNumber;
+    calculatorState = 0;
+    isBufferValueDisplayed = true;
+    bufferValue = 0;
     myButtons[0] = ui->pushButton;
     myButtons[1] = ui->pushButton_2;
     myButtons[2] = ui->pushButton_3;
@@ -31,18 +34,104 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+double MainWindow::formNumberToDisplay(int num){
+    double currentNum = ui->lcdNumber->value();
+    if(calculatorState < 5){
+        if(qFuzzyIsNull(currentNum)){
+            return num;
+        }else{
+            return (currentNum*10 + num);
+        }
+    }else if (calculatorState < 10){
+        if(qFuzzyIsNull(currentNum)){
+            double dNum = num;
+            return dNum/10;
+        }else{
+            double auxNum = currentNum;
+            for(int i =10;;i*=10){
+                int intPartNum = static_cast<int>(auxNum);
+                if(qFuzzyIsNull(auxNum - intPartNum)){
+                    double dNum = num;
+                    return currentNum + dNum/i;
+                }
+                auxNum*=10;
+            }
+        }
+    }
+    return 1;
+}
+
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
 slots void MainWindow::buttonClicked(){
-    QPushButton * clickedButton = (QPushButton*)sender();
-    for(int i = 0; i <= 9;i++){
-        if(clickedButton->text()[0] == i + 48 ){
-            myLCD->display(i);
+    QPushButton* buttonReciever = static_cast<QPushButton*>(sender());
+    if(isBufferValueDisplayed == true){
+        myLCD->display(0);
+        isBufferValueDisplayed = false;
+    }
+    for(int i = 0;i <= 9;i++){
+        if(buttonReciever->text()[0] == i + '0'){
+            myLCD->display(formNumberToDisplay(i));
         }
     }
+    if(buttonReciever->text()[0] == '.'){
+        if(calculatorState < 5){
+            calculatorState += 5;
+        }
+    }else if(buttonReciever->text()[0] == '+'){
+        if(calculatorState == 0 || calculatorState == 5){
+            bufferValue = myLCD->value();
+            myLCD->display(0.0);
+        }else{
+            if(calculatorState < 5){
+                opMap(calculatorState,myLCD->value());
+            }else{
+                opMap(calculatorState - 5,myLCD->value());
+            }
+            bufferValue = myLCD->value();
+            isBufferValueDisplayed = true;
+        }
+        calculatorState = 1;
+    }
 
+}
+
+void MainWindow::opMap(int state,double value){
+    switch(state){
+        case 1:
+            sum(bufferValue,value);
+        break;
+        case 2:
+            sub(bufferValue,value);
+        break;
+        case 3:
+            sub(bufferValue,value);
+        break;
+        case (4):
+            mul(bufferValue,value);
+        break;
+        default:
+        break;
+    }
+}
+
+void MainWindow::sum(double x, double y){
+    myLCD->display(x+y);
+}
+void MainWindow::sub(double x, double y){
+    myLCD->display(x-y);
+}
+void MainWindow::mul(double x, double y){
+    myLCD->display(x*y);
+}
+void MainWindow::div(double x, double y){
+    if(qFuzzyIsNull(y)){
+        myLCD->display("ERRO");
+    }
+    myLCD->display(x/y);
 }
 
