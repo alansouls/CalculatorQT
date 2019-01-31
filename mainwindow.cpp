@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <iostream>
+using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -31,11 +32,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
 double MainWindow::formNumberToDisplay(int num){
     double currentNum = ui->lcdNumber->value();
-    if(qFuzzyIsNull(currentNum)){
-        return num;
-    }else{
-        return (currentNum*10 + num);
+    if(calculatorState < 5){
+        if(qFuzzyIsNull(currentNum)){
+            return num;
+        }else{
+            return (currentNum*10 + num);
+        }
+    }else if (calculatorState < 10){
+        if(qFuzzyIsNull(currentNum)){
+            return num/10;
+        }else{
+            double auxNum = currentNum;
+            for(int i =10;;i*=10){
+                int intPartNum = auxNum/1;
+                if(qFuzzyIsNull(auxNum - intPartNum)){
+                    double dNum = num;
+                    return currentNum + dNum/i;
+                }
+                auxNum*=10;
+            }
+        }
     }
+    return 1;
 }
 
 MainWindow::~MainWindow()
@@ -49,5 +67,8 @@ slots void MainWindow::buttonClicked(){
         if(buttonReciever->text()[0] == i + '0'){
             myLCD->display(formNumberToDisplay(i));
         }
+    }
+    if(buttonReciever->text()[0] == '.'){
+        calculatorState += 5;
     }
 }
