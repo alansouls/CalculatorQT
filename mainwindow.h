@@ -22,14 +22,14 @@ private:
     Ui::MainWindow *ui;
     QPushButton *myButtons[16];
     QLCDNumber *myLCD;
-    bool isDisplayReseted;
+    int calculatorState;
     //Methods
-    void setDisplay();
     void resetDisplay();
     void sum();
     void sub();
     void mul();
     void div();
+    double formNumberToDisplay(int num);
 
 
 private  slots:
