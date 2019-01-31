@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    calculatorState = 0;
     myLCD = ui->lcdNumber;
     myButtons[0] = ui->pushButton;
     myButtons[1] = ui->pushButton_2;
@@ -34,5 +35,10 @@ MainWindow::~MainWindow()
 }
 
 slots void MainWindow::buttonClicked(){
-    myLCD->display(1.2);
+    QPushButton* buttonReciever = static_cast<QPushButton*>(sender());
+    for(int i = 0;i <= 9;i++){
+        if(buttonReciever->text()[0] == i + '0'){
+            myLCD->display(i);
+        }
+    }
 }
