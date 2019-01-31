@@ -83,19 +83,17 @@ slots void MainWindow::buttonClicked(){
             calculatorState += 5;
         }
     }else if(buttonReciever->text()[0] == '+'){
-        if(calculatorState == 0 || calculatorState == 5){
-            bufferValue = myLCD->value();
-            myLCD->display(0.0);
-        }else{
-            if(calculatorState < 5){
-                opMap(calculatorState,myLCD->value());
-            }else{
-                opMap(calculatorState - 5,myLCD->value());
-            }
-            bufferValue = myLCD->value();
-            isBufferValueDisplayed = true;
-        }
+        processOperator();
         calculatorState = 1;
+    }else if(buttonReciever->text()[0] == '-'){
+        processOperator();
+        calculatorState = 2;
+    }else if(buttonReciever->text()[0] == '*'){
+        processOperator();
+        calculatorState = 3;
+    }else if(buttonReciever->text()[0] == '/'){
+        processOperator();
+        calculatorState = 4;
     }
 
 }
@@ -109,10 +107,10 @@ void MainWindow::opMap(int state,double value){
             sub(bufferValue,value);
         break;
         case 3:
-            sub(bufferValue,value);
+            mul(bufferValue,value);
         break;
         case (4):
-            mul(bufferValue,value);
+            div(bufferValue,value);
         break;
         default:
         break;
@@ -133,5 +131,20 @@ void MainWindow::div(double x, double y){
         myLCD->display("ERRO");
     }
     myLCD->display(x/y);
+}
+
+void MainWindow::processOperator(){
+    if(calculatorState == 0 || calculatorState == 5){
+        bufferValue = myLCD->value();
+        myLCD->display(0.0);
+    }else{
+        if(calculatorState < 5){
+            opMap(calculatorState,myLCD->value());
+        }else{
+            opMap(calculatorState - 5,myLCD->value());
+        }
+        bufferValue = myLCD->value();
+        isBufferValueDisplayed = true;
+    }
 }
 

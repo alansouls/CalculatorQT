@@ -33,6 +33,7 @@ private:
     void div(double x, double y);
     double formNumberToDisplay(int num);
     void opMap(int state,double value);
+    void processOperator();
 
 private slots:
     void buttonClicked();
