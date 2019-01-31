@@ -29,6 +29,15 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 }
 
+double MainWindow::formNumberToDisplay(int num){
+    double currentNum = ui->lcdNumber->value();
+    if(qFuzzyIsNull(currentNum)){
+        return num;
+    }else{
+        return (currentNum*10 + num);
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -38,7 +47,7 @@ slots void MainWindow::buttonClicked(){
     QPushButton* buttonReciever = static_cast<QPushButton*>(sender());
     for(int i = 0;i <= 9;i++){
         if(buttonReciever->text()[0] == i + '0'){
-            myLCD->display(i);
+            myLCD->display(formNumberToDisplay(i));
         }
     }
 }
