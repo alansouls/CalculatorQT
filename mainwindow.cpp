@@ -44,7 +44,7 @@ double MainWindow::formNumberToDisplay(int num){
         }else{
             double auxNum = currentNum;
             for(int i =10;;i*=10){
-                int intPartNum = auxNum/1;
+                int intPartNum = static_cast<int>(auxNum);
                 if(qFuzzyIsNull(auxNum - intPartNum)){
                     double dNum = num;
                     return currentNum + dNum/i;

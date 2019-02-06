@@ -23,6 +23,7 @@ private:
     QPushButton *myButtons[16];
     QLCDNumber *myLCD;
     int calculatorState;
+    double bufferValue;
     //Methods
     void resetDisplay();
     void sum();
